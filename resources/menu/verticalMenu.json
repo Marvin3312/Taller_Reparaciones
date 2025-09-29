@@ -1,0 +1,31 @@
+{
+  "menu": [
+    {
+      "menuHeader": "Gestión del Taller"
+    },
+    {
+      "name": "Marcas",
+      "icon": "menu-icon tf-icons bx bx-purchase-tag-alt",
+      "slug": "marcas",
+      "url": "/marcas"
+    },
+    {
+      "name": "Técnicos",
+      "icon": "menu-icon tf-icons bx bx-user-pin",
+      "slug": "tecnicos",
+      "url": "/tecnicos"
+    },
+    {
+      "name": "Equipos",
+      "icon": "menu-icon tf-icons bx bx-laptop",
+      "slug": "equipos",
+      "url": "/equipos"
+    },
+    {
+      "name": "Servicios",
+      "icon": "menu-icon tf-icons bx bx-wrench",
+      "slug": "servicios",
+      "url": "/servicios"
+    }
+  ]
+}

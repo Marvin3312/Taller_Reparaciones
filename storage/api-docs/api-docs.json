@@ -1,0 +1,1638 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Taller de Reparaciones",
+        "description": "Documentación de la API para el sistema de taller de reparaciones",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/equipos": {
+            "get": {
+                "tags": [
+                    "Equipos"
+                ],
+                "summary": "Obtener lista de equipos",
+                "description": "Retorna una lista de todos los equipos.",
+                "operationId": "db0dc4680375cc3d7bb0f041c91f37af",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Equipo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Equipos"
+                ],
+                "summary": "Crear un nuevo equipo",
+                "description": "Crea un nuevo equipo y lo retorna.",
+                "operationId": "6dc3a1b263d69cd8f9a9753d039451c4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tipo"
+                                ],
+                                "properties": {
+                                    "tipo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Laptop",
+                                            "Smartphone",
+                                            "Desktop",
+                                            "Impresora",
+                                            "Otro"
+                                        ],
+                                        "example": "Laptop"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "example": "Inspiron 15"
+                                    },
+                                    "num_serie": {
+                                        "type": "string",
+                                        "example": "ABC123XYZ"
+                                    },
+                                    "id_marca": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Equipo creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Equipo"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/equipos/{id}": {
+            "get": {
+                "tags": [
+                    "Equipos"
+                ],
+                "summary": "Obtener información de un equipo",
+                "description": "Retorna los detalles de un equipo específico.",
+                "operationId": "842cbd30d56b617bac483a7d2a7a6b6a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del equipo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Equipo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Equipo no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Equipos"
+                ],
+                "summary": "Actualizar un equipo",
+                "description": "Actualiza un equipo existente.",
+                "operationId": "c6d8ec9666891019ae6dc9d468d39f61",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del equipo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tipo"
+                                ],
+                                "properties": {
+                                    "tipo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Laptop",
+                                            "Smartphone",
+                                            "Desktop",
+                                            "Impresora",
+                                            "Otro"
+                                        ],
+                                        "example": "Smartphone"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "example": "Galaxy S21"
+                                    },
+                                    "num_serie": {
+                                        "type": "string",
+                                        "example": "DEF456ABC"
+                                    },
+                                    "id_marca": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Equipo actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Equipo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Equipo no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Equipos"
+                ],
+                "summary": "Eliminar un equipo",
+                "description": "Elimina un equipo existente.",
+                "operationId": "e099997c9e7b771f3f79e69cb71ac7f2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del equipo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Equipo eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Equipo eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Equipo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/marcas": {
+            "get": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Obtener lista de marcas",
+                "description": "Retorna una lista de todas las marcas.",
+                "operationId": "cdf1f15837825105957dc1b6581c9377",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Marca"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Crear una nueva marca",
+                "description": "Crea una nueva marca y la retorna.",
+                "operationId": "011cfb0f49c0cd34dc812d3c5e40e41f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "HP"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Marca creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Marca"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/marcas/{id}": {
+            "get": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Obtener información de una marca",
+                "description": "Retorna los detalles de una marca específica.",
+                "operationId": "f044df503607a332772744171e7aebcc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la marca",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Marca"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Marca no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Actualizar una marca",
+                "description": "Actualiza una marca existente.",
+                "operationId": "34d9e20c71578f8affd3a8a0c877d47c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la marca",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Dell"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Marca actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Marca"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Marca no encontrada"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Eliminar una marca",
+                "description": "Elimina una marca existente.",
+                "operationId": "a11c924f91478a8599debeaa76b10428",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la marca",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Marca eliminada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Marca eliminada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Marca no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/servicios": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Obtener lista de servicios",
+                "description": "Retorna una lista de todos los servicios.",
+                "operationId": "3a1c1c392788bd4c8d03626d48d28645",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Servicio"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Crear un nuevo servicio",
+                "description": "Crea un nuevo servicio y lo retorna.",
+                "operationId": "cd978e7e6c3a84104d6e47bc1775f0f6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fecha_recepcion",
+                                    "estado",
+                                    "id_equipo"
+                                ],
+                                "properties": {
+                                    "fecha_recepcion": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-28"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "Recibido"
+                                    },
+                                    "diagnostico": {
+                                        "type": "string",
+                                        "example": "No enciende"
+                                    },
+                                    "solucion": {
+                                        "type": "string",
+                                        "example": "Cambio de batería"
+                                    },
+                                    "id_equipo": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id_tecnico": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Servicio creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Servicio"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/servicios/{id}": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Obtener información de un servicio",
+                "description": "Retorna los detalles de un servicio específico.",
+                "operationId": "9c04868e405cd028d12617722c41d260",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Servicio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Actualizar un servicio",
+                "description": "Actualiza un servicio existente.",
+                "operationId": "44c627d011d44594d0978735c2198fa6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fecha_recepcion",
+                                    "estado",
+                                    "id_equipo"
+                                ],
+                                "properties": {
+                                    "fecha_recepcion": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-28"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "En Reparación"
+                                    },
+                                    "diagnostico": {
+                                        "type": "string",
+                                        "example": "No enciende"
+                                    },
+                                    "solucion": {
+                                        "type": "string",
+                                        "example": "Cambio de batería"
+                                    },
+                                    "id_equipo": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id_tecnico": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Servicio actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Servicio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Eliminar un servicio",
+                "description": "Elimina un servicio existente.",
+                "operationId": "fdd7b675238376844570194b662ea1da",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Servicio eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Servicio eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/servicio-historial": {
+            "get": {
+                "tags": [
+                    "ServicioHistorial"
+                ],
+                "summary": "Obtener lista de historiales de servicio",
+                "description": "Retorna una lista de todos los historiales de servicio.",
+                "operationId": "4a4c71b70e7225f2128964a624c62c89",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ServicioHistorial"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ServicioHistorial"
+                ],
+                "summary": "Crear un nuevo historial de servicio",
+                "description": "Crea un nuevo historial de servicio y lo retorna.",
+                "operationId": "e43410ab7b56c291ab9b1ce1a515668c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_servicio",
+                                    "estado_anterior",
+                                    "estado_nuevo"
+                                ],
+                                "properties": {
+                                    "id_servicio": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estado_anterior": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "Recibido"
+                                    },
+                                    "estado_nuevo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "En Reparación"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Historial creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServicioHistorial"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/servicio-historial/{id}": {
+            "get": {
+                "tags": [
+                    "ServicioHistorial"
+                ],
+                "summary": "Obtener información de un historial de servicio",
+                "description": "Retorna los detalles de un historial de servicio específico.",
+                "operationId": "454fcd03439a87969063c49905d4e1b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del historial",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServicioHistorial"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Historial no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ServicioHistorial"
+                ],
+                "summary": "Actualizar un historial de servicio",
+                "description": "Actualiza un historial de servicio existente.",
+                "operationId": "f6809266293a810ffe64b95efc0f898f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del historial",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_servicio",
+                                    "estado_anterior",
+                                    "estado_nuevo"
+                                ],
+                                "properties": {
+                                    "id_servicio": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estado_anterior": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "En Reparación"
+                                    },
+                                    "estado_nuevo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Recibido",
+                                            "En Reparación",
+                                            "Finalizado",
+                                            "Entregado"
+                                        ],
+                                        "example": "Finalizado"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Historial actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServicioHistorial"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Historial no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ServicioHistorial"
+                ],
+                "summary": "Eliminar un historial de servicio",
+                "description": "Elimina un historial de servicio existente.",
+                "operationId": "5ada1e496c984438b889c013f5d218b2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del historial",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Historial eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Historial eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Historial no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/tecnicos": {
+            "get": {
+                "tags": [
+                    "Tecnicos"
+                ],
+                "summary": "Obtener lista de técnicos",
+                "description": "Retorna una lista de todos los técnicos.",
+                "operationId": "0351284ec276df271ec81cfee5fb94cd",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tecnico"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tecnicos"
+                ],
+                "summary": "Crear un nuevo técnico",
+                "description": "Crea un nuevo técnico y lo retorna.",
+                "operationId": "b8f72b81673b049564bb386c13dfafd5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "id_usuario"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "especialidad": {
+                                        "type": "string",
+                                        "example": "Hardware"
+                                    },
+                                    "correo": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan.perez@example.com"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "id_usuario": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Técnico creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tecnico"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/tecnicos/{id}": {
+            "get": {
+                "tags": [
+                    "Tecnicos"
+                ],
+                "summary": "Obtener información de un técnico",
+                "description": "Retorna los detalles de un técnico específico.",
+                "operationId": "a09d628c1b0f7340a3138a60d5a4a28e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del técnico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tecnico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Técnico no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tecnicos"
+                ],
+                "summary": "Actualizar un técnico",
+                "description": "Actualiza un técnico existente.",
+                "operationId": "311b45b187a93f9fff5a9c4b5450143c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del técnico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "especialidad": {
+                                        "type": "string",
+                                        "example": "Software"
+                                    },
+                                    "correo": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan.perez@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Técnico actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tecnico"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Técnico no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tecnicos"
+                ],
+                "summary": "Eliminar un técnico",
+                "description": "Elimina un técnico existente.",
+                "operationId": "91726adf6ddf29d6fb4d56513e953cc3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del técnico",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Técnico eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Técnico eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Técnico no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener lista de usuarios",
+                "description": "Retorna una lista de todos los usuarios.",
+                "operationId": "d57cb6c6a223fe9801b81b52dcac45df",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear un nuevo usuario",
+                "description": "Crea un nuevo usuario y lo retorna.",
+                "operationId": "96d159a6919ad7ade81fd7af5c7a6be8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password_hash",
+                                    "rol"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "john.doe"
+                                    },
+                                    "password_hash": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "rol": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Admin",
+                                            "Tecnico",
+                                            "Recepcionista"
+                                        ],
+                                        "example": "Tecnico"
+                                    },
+                                    "activo": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener información de un usuario",
+                "description": "Retorna los detalles de un usuario específico.",
+                "operationId": "377032c75382a00d9fcafd558822f36c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar un usuario",
+                "description": "Actualiza un usuario existente.",
+                "operationId": "ee6ffe04a5be33eeca7f8f90c91d9803",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "rol"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "john.doe"
+                                    },
+                                    "password_hash": {
+                                        "description": "Opcional. Enviar solo si se quiere cambiar la contraseña.",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newpassword123"
+                                    },
+                                    "rol": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Admin",
+                                            "Tecnico",
+                                            "Recepcionista"
+                                        ],
+                                        "example": "Admin"
+                                    },
+                                    "activo": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar un usuario",
+                "description": "Elimina un usuario existente.",
+                "operationId": "0f00f1d6dae33b81a874725503534c06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Equipo": {
+                "title": "Equipo",
+                "description": "Modelo de Equipo",
+                "properties": {
+                    "id_equipo": {
+                        "description": "ID del equipo",
+                        "type": "integer"
+                    },
+                    "tipo": {
+                        "description": "Tipo de equipo",
+                        "type": "string",
+                        "enum": [
+                            "Laptop",
+                            "Smartphone",
+                            "Desktop",
+                            "Impresora",
+                            "Otro"
+                        ]
+                    },
+                    "modelo": {
+                        "description": "Modelo del equipo",
+                        "type": "string"
+                    },
+                    "num_serie": {
+                        "description": "Número de serie del equipo",
+                        "type": "string"
+                    },
+                    "id_marca": {
+                        "description": "ID de la marca del equipo",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Marca": {
+                "title": "Marca",
+                "description": "Modelo de Marca",
+                "properties": {
+                    "id_marca": {
+                        "description": "ID de la marca",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre de la marca",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Servicio": {
+                "title": "Servicio",
+                "description": "Modelo de Servicio",
+                "properties": {
+                    "id_servicio": {
+                        "description": "ID del servicio",
+                        "type": "integer"
+                    },
+                    "fecha_recepcion": {
+                        "description": "Fecha de recepción del equipo",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "estado": {
+                        "description": "Estado del servicio",
+                        "type": "string",
+                        "enum": [
+                            "Recibido",
+                            "En Reparación",
+                            "Finalizado",
+                            "Entregado"
+                        ]
+                    },
+                    "diagnostico": {
+                        "description": "Diagnóstico del problema",
+                        "type": "string"
+                    },
+                    "solucion": {
+                        "description": "Solución aplicada",
+                        "type": "string"
+                    },
+                    "id_equipo": {
+                        "description": "ID del equipo relacionado",
+                        "type": "integer"
+                    },
+                    "id_tecnico": {
+                        "description": "ID del técnico asignado",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ServicioHistorial": {
+                "title": "ServicioHistorial",
+                "description": "Modelo de Historial de Servicio",
+                "properties": {
+                    "id_historial": {
+                        "description": "ID del historial",
+                        "type": "integer"
+                    },
+                    "id_servicio": {
+                        "description": "ID del servicio asociado",
+                        "type": "integer"
+                    },
+                    "estado_anterior": {
+                        "description": "Estado anterior del servicio",
+                        "type": "string",
+                        "enum": [
+                            "Recibido",
+                            "En Reparación",
+                            "Finalizado",
+                            "Entregado"
+                        ]
+                    },
+                    "estado_nuevo": {
+                        "description": "Nuevo estado del servicio",
+                        "type": "string",
+                        "enum": [
+                            "Recibido",
+                            "En Reparación",
+                            "Finalizado",
+                            "Entregado"
+                        ]
+                    },
+                    "fecha_cambio": {
+                        "description": "Fecha y hora del cambio de estado",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Tecnico": {
+                "title": "Tecnico",
+                "description": "Modelo de Tecnico",
+                "properties": {
+                    "id_tecnico": {
+                        "description": "ID del técnico",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre del técnico",
+                        "type": "string"
+                    },
+                    "especialidad": {
+                        "description": "Especialidad del técnico",
+                        "type": "string"
+                    },
+                    "correo": {
+                        "description": "Correo electrónico del técnico",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "telefono": {
+                        "description": "Teléfono del técnico",
+                        "type": "string"
+                    },
+                    "id_usuario": {
+                        "description": "ID del usuario asociado",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Usuario": {
+                "title": "Usuario",
+                "description": "Modelo de Usuario",
+                "properties": {
+                    "id_usuario": {
+                        "description": "ID del usuario",
+                        "type": "integer"
+                    },
+                    "username": {
+                        "description": "Nombre de usuario",
+                        "type": "string"
+                    },
+                    "rol": {
+                        "description": "Rol del usuario",
+                        "type": "string",
+                        "enum": [
+                            "Admin",
+                            "Tecnico",
+                            "Recepcionista"
+                        ]
+                    },
+                    "activo": {
+                        "description": "Estado de activación del usuario",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Equipos",
+            "description": "Equipos"
+        },
+        {
+            "name": "Marcas",
+            "description": "Marcas"
+        },
+        {
+            "name": "Servicios",
+            "description": "Servicios"
+        },
+        {
+            "name": "ServicioHistorial",
+            "description": "ServicioHistorial"
+        },
+        {
+            "name": "Tecnicos",
+            "description": "Tecnicos"
+        },
+        {
+            "name": "Usuarios",
+            "description": "Usuarios"
+        }
+    ]
+}
