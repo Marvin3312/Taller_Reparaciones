@@ -1,0 +1,104 @@
+-- ============================================
+-- CREACIÓN DE BASE DE DATOS
+-- ============================================
+CREATE DATABASE IF NOT EXISTS taller_reparaciones;
+USE taller_reparaciones;
+
+-- ============================================
+-- TABLA: usuario (credenciales y acceso al sistema)
+-- ============================================
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    rol ENUM('Admin','Tecnico','Recepcionista') DEFAULT 'Tecnico',
+    activo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- ============================================
+-- TABLA: tecnico (datos del personal técnico)
+-- Relación 1 a 1 con usuario
+-- ============================================
+CREATE TABLE tecnico (
+    id_tecnico INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    especialidad VARCHAR(100),
+    correo VARCHAR(100) UNIQUE,
+    telefono VARCHAR(20),
+    id_usuario INT UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+-- ============================================
+-- TABLA: marca (fabricantes de equipos)
+-- ============================================
+CREATE TABLE marca (
+    id_marca INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+-- ============================================
+-- TABLA: equipo (dispositivos que ingresan al taller)
+-- Relación N a 1 con marca
+-- ============================================
+CREATE TABLE equipo (
+    id_equipo INT AUTO_INCREMENT PRIMARY KEY,
+    tipo ENUM('Laptop','Smartphone','Desktop','Impresora','Otro') NOT NULL,
+    modelo VARCHAR(100),
+    num_serie VARCHAR(100),
+    id_marca INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
+);
+
+-- ============================================
+-- TABLA: servicio (reparaciones registradas)
+-- Relación N a 1 con equipo y técnico
+-- ============================================
+CREATE TABLE servicio (
+    id_servicio INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_recepcion DATE NOT NULL,
+    estado ENUM('Recibido','En Reparación','Finalizado','Entregado') DEFAULT 'Recibido',
+    diagnostico TEXT,
+    solucion TEXT,
+    id_equipo INT NOT NULL,
+    id_tecnico INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_equipo) REFERENCES equipo(id_equipo),
+    FOREIGN KEY (id_tecnico) REFERENCES tecnico(id_tecnico)
+);
+
+
+
+
+-- ============================================
+-- DATOS DE PRUEBA
+-- ============================================
+
+
+
+-- Técnicos
+INSERT INTO tecnico (nombre, especialidad, correo, telefono, id_usuario) VALUES
+('Juan Pérez', 'Laptops y Smartphones', 'juan@example.com', '555-1234', 2);
+
+-- Marcas
+INSERT INTO marca (nombre) VALUES
+('Dell'), ('HP'), ('Samsung'), ('Epson');
+
+-- Equipos
+INSERT INTO equipo (tipo, modelo, num_serie, id_marca) VALUES
+('Laptop', 'Inspiron 15', 'SN12345', 1),
+('Smartphone', 'Galaxy S21', 'SN67890', 3),
+('Impresora', 'L3150', 'SN54321', 4);
+
+-- Servicios
+INSERT INTO servicio (fecha_recepcion, estado, diagnostico, solucion, id_equipo, id_tecnico) VALUES
+('2025-09-20', 'Recibido', 'Pantalla rota', NULL, 1, 1),
+('2025-09-21', 'En Reparación', 'No enciende', 'Cambio de batería', 2, 1),
+('2025-09-22', 'Finalizado', 'Atascos de papel', 'Mantenimiento general', 3, 1);
