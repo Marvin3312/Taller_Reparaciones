@@ -26,6 +26,15 @@
       "icon": "menu-icon tf-icons bx bx-wrench",
       "slug": "servicios",
       "url": "/servicios"
+    },
+    {
+      "menuHeader": "Administración"
+    },
+    {
+      "name": "Usuarios",
+      "icon": "menu-icon tf-icons bx bx-user-circle",
+      "slug": "usuarios",
+      "url": "/usuarios"
     }
   ]
 }

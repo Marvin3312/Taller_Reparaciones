@@ -35,6 +35,7 @@
                 <span class="badge bg-info text-dark">{{ $servicio['estado'] }}</span>
               </td>
               <td>
+                <a href="{{ route('servicios.pdf', $servicio['id_servicio']) }}" class="btn btn-sm btn-info">Imprimir</a>
                 <a href="{{ route('servicios.edit', $servicio['id_servicio']) }}" class="btn btn-sm btn-warning">Editar</a>
                 <form action="{{ route('servicios.destroy', $servicio['id_servicio']) }}" method="POST" style="display:inline-block;">
                   @csrf

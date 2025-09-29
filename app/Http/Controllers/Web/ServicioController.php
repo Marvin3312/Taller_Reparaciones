@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Servicio;
 use App\Models\Equipo;
 use App\Models\Tecnico;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ServicioController extends Controller
 {
@@ -81,5 +82,12 @@ class ServicioController extends Controller
         Servicio::destroy($id);
 
         return redirect()->route('servicios.index');
+    }
+
+    public function generarTicketPdf($id)
+    {
+        $servicio = Servicio::with('equipo.marca', 'tecnico')->findOrFail($id);
+        $pdf = Pdf::loadView('servicios.ticket', ['servicio' => $servicio]);
+        return $pdf->stream('ticket-servicio-'.$id.'.pdf');
     }
 }
